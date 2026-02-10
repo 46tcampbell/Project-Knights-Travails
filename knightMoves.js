@@ -1,3 +1,5 @@
+import { Queue } from './queue.js';
+
 export function knightMoves(array1, array2) {
   //   Below if statement checks that the arguments passed are arrays of 2 digits.
 
@@ -17,6 +19,47 @@ export function knightMoves(array1, array2) {
       'Please ensure the x and y coordinates are between 0 and 7'
     );
   }
+
+  let test;
+
+  const knightMovesQueue = new Queue();
+  knightMovesQueue.enqueue(array1);
+
+  while (!knightMovesQueue.isEmpty()) {
+    const dequeuedArray = knightMovesQueue.dequeue();
+    if (dequeuedArray.length === 2) {
+      const sub2XAdd1Y = [
+        dequeuedArray,
+        [dequeuedArray[0] - 2, dequeuedArray[1] + 1],
+      ];
+      if (
+        sub2XAdd1Y[0] >= 0 &&
+        sub2XAdd1Y[0] < 7 &&
+        sub2XAdd1Y[1] >= 0 &&
+        sub2XAdd1Y[1] < 7
+      ) {
+        knightMovesQueue.enqueue(sub2XAdd1Y);
+      }
+    } else {
+      const sub2XAdd1Y = [
+        ...dequeuedArray,
+        [
+          dequeuedArray[dequeuedArray.length - 1][0],
+          dequeuedArray[dequeuedArray.length - 1][1],
+        ],
+      ];
+      if (
+        sub2XAdd1Y[0] >= 0 &&
+        sub2XAdd1Y[0] < 7 &&
+        sub2XAdd1Y[1] >= 0 &&
+        sub2XAdd1Y[1] < 7
+      ) {
+        knightMovesQueue.enqueue(sub2XAdd1Y);
+      }
+    }
+    test = knightMovesQueue.dequeue();
+  }
+  console.log(test);
 }
 
 knightMoves([0, 1], [0, 1]);
