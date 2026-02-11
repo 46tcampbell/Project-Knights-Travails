@@ -20,7 +20,16 @@ export function knightMoves(array1, array2) {
     );
   }
   // Below if statement checks that the coordinates of the arrays are between 0 and 7
-  if (array1[0] < 0 || array1[0] > 7 || array2[0] < 0 || array2[0] > 7) {
+  if (
+    array1[0] < 0 ||
+    array1[0] > 7 ||
+    array1[1] < 0 ||
+    array1[1] > 7 ||
+    array2[0] < 0 ||
+    array2[0] > 7 ||
+    array2[1] < 0 ||
+    array2[1] > 7
+  ) {
     throw new Error(
       'Please ensure the x and y coordinates are between 0 and 7'
     );
@@ -60,7 +69,13 @@ export function knightMoves(array1, array2) {
 // knightMoves([0, 0], [3, 3]);
 // knightMoves([3, 3], [1, 4]);
 // knightMoves([3, 3], [5, 7]);
-// knightMoves([3, 3], [4, 3]);
-// knightMoves([0, 0], [3, 3]);
-// knightMoves([3, 3], [0, 0]);
+
+knightMoves([0, 0], [1, 2]);
+knightMoves([0, 0], [3, 3]);
+knightMoves([3, 3], [0, 0]);
 knightMoves([0, 0], [7, 7]);
+knightMoves([3, 3], [4, 3]);
+// knightMoves();
+// knightMoves([-3], [4]);
+// knightMoves([3], [8]);
+// knightMoves([3, -3], [4, 3]);
