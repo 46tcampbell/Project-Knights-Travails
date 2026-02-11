@@ -20,23 +20,36 @@ export function knightMoves(array1, array2) {
     );
   }
 
-  let test;
-
+  // Below we create the queue and enqueue the first argument array passed.
   const knightMovesQueue = new Queue();
   knightMovesQueue.enqueue(array1);
 
+  // Below while loop runs until queue is empty or base case hits (reaching 2nd argument array coordinates)
   while (!knightMovesQueue.isEmpty()) {
     const dequeuedArray = knightMovesQueue.dequeue();
-    if (dequeuedArray.length === 2) {
+    // Below is the base case to exit loop and return function
+    if (
+      dequeuedArray[dequeuedArray.length - 1][0] === array2[0] &&
+      dequeuedArray[dequeuedArray.length - 1][1] === array2[1]
+    ) {
+      console.log(
+        `We have reached the final spot. Array2: ${array2} | dequeuedArray: ${dequeuedArray}`
+      );
+      return console.log(dequeuedArray);
+    }
+    /* This if statement check is important as the first time an array is added is different codes then subsequent passes
+   so the same sub2XAdd1Y item is listed twice.
+    */
+    if (!dequeuedArray.some((el) => Array.isArray(el))) {
       const sub2XAdd1Y = [
         dequeuedArray,
         [dequeuedArray[0] - 2, dequeuedArray[1] + 1],
       ];
       if (
-        sub2XAdd1Y[0] >= 0 &&
-        sub2XAdd1Y[0] < 7 &&
-        sub2XAdd1Y[1] >= 0 &&
-        sub2XAdd1Y[1] < 7
+        sub2XAdd1Y[sub2XAdd1Y.length - 1][0] >= 0 &&
+        sub2XAdd1Y[sub2XAdd1Y.length - 1][0] < 7 &&
+        sub2XAdd1Y[sub2XAdd1Y.length - 1][1] >= 0 &&
+        sub2XAdd1Y[sub2XAdd1Y.length - 1][1] < 7
       ) {
         knightMovesQueue.enqueue(sub2XAdd1Y);
       }
@@ -57,9 +70,9 @@ export function knightMoves(array1, array2) {
         knightMovesQueue.enqueue(sub2XAdd1Y);
       }
     }
-    test = knightMovesQueue.dequeue();
+    // console.log(knightMovesQueue.dequeue());
   }
-  console.log(test);
 }
 
-knightMoves([0, 1], [0, 1]);
+knightMoves([0, 0], [3, 3]);
+knightMoves([3, 3], [1, 4]);
