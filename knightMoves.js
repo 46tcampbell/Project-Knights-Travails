@@ -33,9 +33,10 @@ export function knightMoves(array1, array2) {
       dequeuedArray[dequeuedArray.length - 1][1] === array2[1]
     ) {
       console.log(
-        `We have reached the final spot. Array2: ${array2} | dequeuedArray: ${dequeuedArray}`
+        `You made it in ${dequeuedArray.length} moves. Here's your path:`
       );
-      return console.log(dequeuedArray);
+      // console.log(dequeuedArray);
+      return dequeuedArray.forEach((item) => console.log(item));
     }
     /* This if statement check is important as the first time an array is added is different codes then subsequent passes
    so the same sub2XAdd1Y item is listed twice.
@@ -47,32 +48,60 @@ export function knightMoves(array1, array2) {
       ];
       if (
         sub2XAdd1Y[sub2XAdd1Y.length - 1][0] >= 0 &&
-        sub2XAdd1Y[sub2XAdd1Y.length - 1][0] < 7 &&
+        sub2XAdd1Y[sub2XAdd1Y.length - 1][0] <= 7 &&
         sub2XAdd1Y[sub2XAdd1Y.length - 1][1] >= 0 &&
-        sub2XAdd1Y[sub2XAdd1Y.length - 1][1] < 7
+        sub2XAdd1Y[sub2XAdd1Y.length - 1][1] <= 7
       ) {
         knightMovesQueue.enqueue(sub2XAdd1Y);
+      }
+      const add1XAdd2Y = [
+        dequeuedArray,
+        [dequeuedArray[0] + 1, dequeuedArray[1] + 2],
+      ];
+      if (
+        add1XAdd2Y[add1XAdd2Y.length - 1][0] >= 0 &&
+        add1XAdd2Y[add1XAdd2Y.length - 1][0] <= 7 &&
+        add1XAdd2Y[add1XAdd2Y.length - 1][1] >= 0 &&
+        add1XAdd2Y[add1XAdd2Y.length - 1][1] <= 7
+      ) {
+        knightMovesQueue.enqueue(add1XAdd2Y);
       }
     } else {
       const sub2XAdd1Y = [
         ...dequeuedArray,
         [
-          dequeuedArray[dequeuedArray.length - 1][0],
-          dequeuedArray[dequeuedArray.length - 1][1],
+          dequeuedArray[dequeuedArray.length - 1][0] - 2,
+          dequeuedArray[dequeuedArray.length - 1][1] + 1,
         ],
       ];
       if (
-        sub2XAdd1Y[0] >= 0 &&
-        sub2XAdd1Y[0] < 7 &&
-        sub2XAdd1Y[1] >= 0 &&
-        sub2XAdd1Y[1] < 7
+        sub2XAdd1Y[sub2XAdd1Y.length - 1][0] >= 0 &&
+        sub2XAdd1Y[sub2XAdd1Y.length - 1][0] <= 7 &&
+        sub2XAdd1Y[sub2XAdd1Y.length - 1][1] >= 0 &&
+        sub2XAdd1Y[sub2XAdd1Y.length - 1][1] <= 7
       ) {
         knightMovesQueue.enqueue(sub2XAdd1Y);
+      }
+      const add1XAdd2Y = [
+        ...dequeuedArray,
+        [
+          dequeuedArray[dequeuedArray.length - 1][0] + 1,
+          dequeuedArray[dequeuedArray.length - 1][1] + 2,
+        ],
+      ];
+      if (
+        add1XAdd2Y[add1XAdd2Y.length - 1][0] >= 0 &&
+        add1XAdd2Y[add1XAdd2Y.length - 1][0] <= 7 &&
+        add1XAdd2Y[add1XAdd2Y.length - 1][1] >= 0 &&
+        add1XAdd2Y[add1XAdd2Y.length - 1][1] <= 7
+      ) {
+        knightMovesQueue.enqueue(add1XAdd2Y);
       }
     }
     // console.log(knightMovesQueue.dequeue());
   }
 }
 
-knightMoves([0, 0], [3, 3]);
-knightMoves([3, 3], [1, 4]);
+// knightMoves([0, 0], [3, 3]);
+// knightMoves([3, 3], [1, 4]);
+knightMoves([3, 3], [5, 7]);
