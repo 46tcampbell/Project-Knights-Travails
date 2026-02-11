@@ -1,4 +1,10 @@
 import { Queue } from './queue.js';
+import {
+  knightMoveSubXAddY,
+  knightMoveAddXAddY,
+  knightMoveSubXSubY,
+  knightMoveAddXSubY,
+} from './utils.js';
 
 export function knightMoves(array1, array2) {
   //   Below if statement checks that the arguments passed are arrays of 2 digits.
@@ -33,75 +39,28 @@ export function knightMoves(array1, array2) {
       dequeuedArray[dequeuedArray.length - 1][1] === array2[1]
     ) {
       console.log(
-        `You made it in ${dequeuedArray.length} moves. Here's your path:`
+        `You made it in ${dequeuedArray.length - 1} moves. Here's your path:`
       );
       // console.log(dequeuedArray);
       return dequeuedArray.forEach((item) => console.log(item));
     }
-    /* This if statement check is important as the first time an array is added is different codes then subsequent passes
-   so the same sub2XAdd1Y item is listed twice.
-    */
-    if (!dequeuedArray.some((el) => Array.isArray(el))) {
-      const sub2XAdd1Y = [
-        dequeuedArray,
-        [dequeuedArray[0] - 2, dequeuedArray[1] + 1],
-      ];
-      if (
-        sub2XAdd1Y[sub2XAdd1Y.length - 1][0] >= 0 &&
-        sub2XAdd1Y[sub2XAdd1Y.length - 1][0] <= 7 &&
-        sub2XAdd1Y[sub2XAdd1Y.length - 1][1] >= 0 &&
-        sub2XAdd1Y[sub2XAdd1Y.length - 1][1] <= 7
-      ) {
-        knightMovesQueue.enqueue(sub2XAdd1Y);
-      }
-      const add1XAdd2Y = [
-        dequeuedArray,
-        [dequeuedArray[0] + 1, dequeuedArray[1] + 2],
-      ];
-      if (
-        add1XAdd2Y[add1XAdd2Y.length - 1][0] >= 0 &&
-        add1XAdd2Y[add1XAdd2Y.length - 1][0] <= 7 &&
-        add1XAdd2Y[add1XAdd2Y.length - 1][1] >= 0 &&
-        add1XAdd2Y[add1XAdd2Y.length - 1][1] <= 7
-      ) {
-        knightMovesQueue.enqueue(add1XAdd2Y);
-      }
-    } else {
-      const sub2XAdd1Y = [
-        ...dequeuedArray,
-        [
-          dequeuedArray[dequeuedArray.length - 1][0] - 2,
-          dequeuedArray[dequeuedArray.length - 1][1] + 1,
-        ],
-      ];
-      if (
-        sub2XAdd1Y[sub2XAdd1Y.length - 1][0] >= 0 &&
-        sub2XAdd1Y[sub2XAdd1Y.length - 1][0] <= 7 &&
-        sub2XAdd1Y[sub2XAdd1Y.length - 1][1] >= 0 &&
-        sub2XAdd1Y[sub2XAdd1Y.length - 1][1] <= 7
-      ) {
-        knightMovesQueue.enqueue(sub2XAdd1Y);
-      }
-      const add1XAdd2Y = [
-        ...dequeuedArray,
-        [
-          dequeuedArray[dequeuedArray.length - 1][0] + 1,
-          dequeuedArray[dequeuedArray.length - 1][1] + 2,
-        ],
-      ];
-      if (
-        add1XAdd2Y[add1XAdd2Y.length - 1][0] >= 0 &&
-        add1XAdd2Y[add1XAdd2Y.length - 1][0] <= 7 &&
-        add1XAdd2Y[add1XAdd2Y.length - 1][1] >= 0 &&
-        add1XAdd2Y[add1XAdd2Y.length - 1][1] <= 7
-      ) {
-        knightMovesQueue.enqueue(add1XAdd2Y);
-      }
-    }
-    // console.log(knightMovesQueue.dequeue());
+    /* Below are the eight possible moves that can be taken by the knight on 
+    each pass from wherever they are on the chess board */
+    knightMoveSubXAddY(knightMovesQueue, dequeuedArray, 2, 1);
+    knightMoveSubXSubY(knightMovesQueue, dequeuedArray, 2, 1);
+    knightMoveAddXAddY(knightMovesQueue, dequeuedArray, 2, 1);
+    knightMoveAddXSubY(knightMovesQueue, dequeuedArray, 2, 1);
+    knightMoveSubXAddY(knightMovesQueue, dequeuedArray, 1, 2);
+    knightMoveSubXSubY(knightMovesQueue, dequeuedArray, 1, 2);
+    knightMoveAddXAddY(knightMovesQueue, dequeuedArray, 1, 2);
+    knightMoveAddXSubY(knightMovesQueue, dequeuedArray, 1, 2);
   }
 }
 
 // knightMoves([0, 0], [3, 3]);
 // knightMoves([3, 3], [1, 4]);
-knightMoves([3, 3], [5, 7]);
+// knightMoves([3, 3], [5, 7]);
+// knightMoves([3, 3], [4, 3]);
+// knightMoves([0, 0], [3, 3]);
+// knightMoves([3, 3], [0, 0]);
+knightMoves([0, 0], [7, 7]);
